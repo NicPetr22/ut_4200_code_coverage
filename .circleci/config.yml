@@ -29,3 +29,15 @@ jobs:
 
       - store_artifacts:
           path: coverage-report  
+          
+workflows:
+  version: 2
+  build_and_notify:
+    jobs:
+      - build
+
+    post-steps:
+      - slack/notify:
+          event: warning
+          channel: general
+          message: "This is Nicolas Petrick submitting the Slack assignment"
