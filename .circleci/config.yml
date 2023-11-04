@@ -30,10 +30,10 @@ workflows:
   build_and_notify:
     jobs:
       - build
-
-    post-steps:
       - slack/notify:
-          event: warning
-          channel: general
+          requires:
+            - build
+          slack_api_token: xoxb-3971980909700-6131984087778-xV94xl7Tq6n7bbMYvp3NybyK
+          channel: "general"
           message: "This is Nicolas Petrick submitting the Slack assignment"
 
