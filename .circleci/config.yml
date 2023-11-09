@@ -1,8 +1,30 @@
 version: 2.1
 orbs:
-  slack: circleci/slack@4.5.0
+  slack: circleci/slack@4.12.5
 
 jobs:
+  notify:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "This is Nicolas Petrick submitting the Slack assignment.",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: always
+          
   build:
     docker:
       - image: circleci/node:latest
@@ -25,17 +47,9 @@ jobs:
       - store_artifacts:
           path: coverage-report 
 
-      - slack/notify:
-          requires:
-            - build
-          slack_api_token: xoxb-3971980909700-6131984087778-xV94xl7Tq6n7bbMYvp3NybyK
-          channel: "general"
-          message: "This is Nicolas Petrick submitting the Slack assignment"
-
 workflows:
-  version: 2
-  build_and_notify:
+  send-notification:
     jobs:
       - build
-
+      - notify
 
