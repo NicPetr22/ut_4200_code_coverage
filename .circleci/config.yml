@@ -49,11 +49,10 @@ jobs:
           path: coverage-report 
 
 workflows:
-  version: 2
   send-notification:
-    - notify 
-        context: slack-secrets
     jobs:
-      - build
-      - notify
+    - notify: 
+        context: slack-secrets
+    - build
+  
 
