@@ -42,7 +42,7 @@ jobs:
 
       - run:
           name: Generate Code Coverage
-          command: npm run coverage
+          command: npm run code-coverage
 
       - store_artifacts:
           path: coverage-report 
